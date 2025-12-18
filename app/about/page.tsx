@@ -60,7 +60,7 @@ const experiences: Experience[] = [
       {
         title: "Grant Explore",
         period: "September 2024 - October 2024",
-        description: ``,
+        description: `Same as for SCP, but with more work on GnoVM and packages/realm`,
         link: "https://github.com/gnolang/hackerspace/issues/84",
       },
       {
