@@ -8,6 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 import Stars from './components/stars'
+import ClientLayout from './components/client-layout'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -15,12 +16,12 @@ export const metadata: Metadata = {
     default: 'Thox.me',
     template: '%s | Thox.me',
   },
-  description: 'This is my portfolio.',
+  description: 'Welcome to Thox.me, the personal portfolio of Thox.',
   openGraph: {
-    title: 'My Portfolio',
-    description: 'This is my portfolio.',
+    title: 'Thox.me',
+    description: 'Welcome to Thox.me, the personal portfolio of Thox.',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'Thox.me',
     locale: 'en_US',
     type: 'website',
   },
@@ -54,14 +55,16 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto min-h-screen relative">
-        <Stars quantity={100} />
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0 relative z-10">
-          <Navbar />
-          {children}
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-        </main>
+        <ClientLayout>
+          <Stars quantity={100} />
+          <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0 relative z-10">
+            <Navbar />
+            {children}
+            <Footer />
+            <Analytics />
+            <SpeedInsights />
+          </main>
+        </ClientLayout>
       </body>
     </html>
   )
