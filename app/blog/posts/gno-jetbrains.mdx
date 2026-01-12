@@ -1,0 +1,229 @@
+---
+title: 'Gno Plugin for JetBrains IDEs'
+publishedAt: '2026-01-11'
+summary: 'Developing a comprehensive IntelliJ plugin for the Gno programming language, bringing modern IDE features to the Gnoland ecosystem with syntax highlighting, LSP integration, and developer tools.'
+---
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/gno-jetbrains/1.png" alt="Gno Plugin for JetBrains IDEs" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Gno plugin bringing modern IDE features to JetBrains</p>
+</div>
+
+Developing for the **Gno** programming language just got significantly easier. As part of my individual grant work for the Gnoland ecosystem, I've created a comprehensive IntelliJ plugin that brings modern IDE features to Gno developers working in JetBrains environments.
+
+---
+
+# Why a Gno Plugin for JetBrains?
+
+The Gno programming language, designed for building smart contracts on the Gnoland blockchain, deserves the same developer experience quality as other modern languages. While developers could write `.gno` files in any text editor, having proper IDE support dramatically improves productivity and code quality.
+
+The motivation came from the community need expressed in [this GitHub issue](https://github.com/gnolang/hackerspace/issues/84), where developers requested better tooling support for Gno development.
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/gno-jetbrains/highlight.png" alt="Gno syntax highlighting" className="rounded-lg shadow-sm max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Rich syntax highlighting for .gno files</p>
+</div>
+
+# Plugin Features
+
+### Core Language Support
+
+The plugin provides comprehensive support for the Gno programming language:
+
+- **Syntax highlighting**: Rich color coding for Gno keywords, functions, and constructs
+- **File recognition**: Automatic detection and handling of `.gno` files
+- **Code completion**: IntelliSense for Gno keywords and language constructs
+- **Error highlighting**: Real-time syntax error detection and highlighting
+- **Code navigation**: Jump to definitions, find usages, and symbol navigation
+
+### Advanced IDE Integration
+
+Beyond basic language support, the plugin integrates deeply with JetBrains IDEs:
+
+```yaml
+# Plugin configuration
+plugin-features:
+  language-server: gnopls integration via lsp4ij
+  auto-import: Automatic import management
+  refactoring: Symbol renaming and code restructuring
+  formatting: Code formatting for .gno files
+  analysis: Static code analysis and suggestions
+```
+
+**Key technical features:**
+- **LSP Integration**: Leverages `gnopls` (Gno Language Server Protocol) via lsp4ij
+- **Cross-platform**: Works on Linux, macOS, and Windows
+- **Modern architecture**: Built with Gradle and supports IntelliJ 2023.2+
+
+# Technical Architecture
+
+### Development Stack
+
+The plugin is built using modern development practices and tools:
+
+```groovy
+// build.gradle configuration
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.17.2'
+}
+
+intellij {
+    version = '2023.2'
+    type = 'IC'
+    plugins = ['com.redhat.devtools.lsp4ij']
+}
+```
+
+**Technology choices:**
+- **Java 17+**: Modern Java features and performance
+- **IntelliJ Platform**: Robust plugin development framework
+- **Gradle 8.8+**: Build automation and dependency management
+- **LSP4IJ**: Language Server Protocol integration
+
+### Language Server Integration
+
+The plugin's power comes from its integration with `gnopls`:
+
+```java
+// LSP configuration for Gno
+public class GnoLanguageServerFactory implements LanguageServerFactory {
+    @Override
+    public LanguageServerDefinition createServerDefinition() {
+        return new LanguageServerDefinition(
+            "gno",
+            "gnopls",
+            Arrays.asList("*.gno")
+        );
+    }
+}
+```
+
+This integration provides:
+- **Real-time analysis**: Instant feedback on code quality
+- **Intelligent completion**: Context-aware code suggestions
+- **Symbol resolution**: Accurate navigation and refactoring
+- **Error diagnostics**: Comprehensive error reporting
+
+# Development Challenges
+
+The main challenge was adapting from Go plugin patterns while maintaining Gno's unique characteristics:
+
+```kotlin
+// File type registration for .gno files
+class GnoFileType : LanguageFileType(GnoLanguage.INSTANCE) {
+    override fun getName(): String = "Gno"
+    override fun getDescription(): String = "Gno programming language"
+    override fun getDefaultExtension(): String = "gno"
+    override fun getIcon(): Icon? = GnoIcons.FILE
+}
+```
+
+**Key technical considerations:**
+- **Language-specific grammar**: Custom parsing rules for Gno syntax and blockchain constructs
+- **LSP integration**: Seamless gnopls setup with automatic lsp4ij installation
+- **Performance optimization**: Efficient communication with the language server
+
+<br />
+
+---
+
+# Installation and Usage
+
+### Requirements
+
+Before installing the plugin, ensure you have:
+
+- **IntelliJ IDEA** or **GoLand 2023.2+**
+- **Java JDK 17+** (all platforms)
+- **Gradle 8.8+** (Windows only for development)
+
+### Installation Process
+
+```bash
+# Clone the repository
+git clone https://github.com/gnoverse/intellij-gno.git
+cd intellij-gno
+
+# Build the plugin
+./gradlew buildPlugin
+
+# The built plugin will be in build/distributions/
+```
+
+Then install via IntelliJ's plugin manager and restart your IDE.
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/gno-jetbrains/plugin.png" alt="Gno plugin in JetBrains plugin manager" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Gno plugin available in JetBrains plugin manager</p>
+</div>
+
+### Getting Started
+
+Once installed, the plugin automatically:
+
+1. **Recognizes .gno files** with proper syntax highlighting
+2. **Installs lsp4ij** for Language Server Protocol support
+3. **Configures gnopls** for advanced language features
+4. **Provides code completion** and navigation
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/gno-jetbrains/completion.png" alt="Gno code completion" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Intelligent code completion in action</p>
+</div>
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/gno-jetbrains/direction.png" alt="Gno go to declaration" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Smart navigation and go-to-declaration features</p>
+</div>
+
+# Impact on Gno Development
+
+### Developer Experience Improvement
+
+The plugin significantly enhances the Gno development experience:
+
+- **Faster development**: Intelligent completion reduces typing and errors
+- **Better code quality**: Real-time analysis catches issues early
+- **Easier navigation**: Jump to definitions and find usages instantly
+- **Professional workflow**: Full IDE features for smart contract development
+
+### Community Impact
+
+Open-sourced under Apache 2.0, the plugin encourages ecosystem growth through community contributions and regular feedback integration. Better tooling naturally attracts more developers to the Gno ecosystem.
+
+<br />
+
+# What's Next
+
+The plugin roadmap focuses on expanding blockchain-specific development features:
+
+- **Debugging support**: Direct integration with Gno's debugging tools for step-through contract debugging
+- **Smart contract templates**: Ready-to-use project templates for DeFi, NFT, and governance contracts
+- **Deployment integration**: One-click deployment to Gnoland testnet and mainnet
+- **Real-time testing**: Built-in test runner with blockchain state simulation
+- **Package management**: Visual dependency management for Gno packages and realms
+
+These features will make the plugin a complete development environment for Gno smart contracts, rivaling the experience developers expect from mature ecosystems like Ethereum.
+
+---
+
+# Key Learnings
+
+This project highlighted the importance of community-driven development and LSP standardization. Deep IDE integration creates significantly better developer experiences compared to basic syntax highlighting, and transparent open-source development naturally encourages broader adoption.
+
+<br />
+
+# Contributing to Gno Ecosystem
+
+This plugin represents more than just tooling—it's an investment in the Gno ecosystem's growth. By lowering the barrier to entry for developers and providing professional-grade development tools, we're helping build a stronger foundation for the Gnoland blockchain.
+
+---
+
+**Ready to try it?** The plugin is available for testing and contributions are welcome!
+
+🔗 **Useful links:**
+- [GitHub Repository](https://github.com/gnoverse/intellij-gno)
+- [Development Issue](https://github.com/gnoverse/intellij-gno/issues/)
+- [Gnoland Official Site](https://gno.land)
+- [IntelliJ Plugin Development Guide](https://plugins.jetbrains.com/docs/intellij/)
