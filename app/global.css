@@ -104,7 +104,9 @@ html {
 }
 
 .prose strong {
-  @apply font-medium;
+  @apply font-bold;
+  color: #c3a466;
+  text-shadow: 0 0 2px rgba(255,255,255,0.1);
 }
 
 .prose ul {
@@ -145,9 +147,6 @@ table {
   white-space: nowrap;
 }
 
-.title {
-  text-wrap: balance;
-}
 
 @keyframes fade-in {
   from {
