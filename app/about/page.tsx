@@ -22,6 +22,16 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
+    title: "Hackathon CapX",
+    organization: "CapX",
+    period: "December 17 2025 - December 27 2025",
+    description: `Hackathon blockchain with AI organized by CapX.
+    Our team developed Hivee, a decentralized credit protocol that enables autonomous AI agents to lend and borrow without human intervention. Built on CapX blockchain with ERC-8004 and x402 payment.`,
+    link: "https://hackathon.capx.ai/",
+    projectLink: "https://github.com/DIGIX666/Hivee",
+    type: "professional"
+  },     
+  {
     title: "Hackathon WCHL",
     organization: "ICP (Internet Computer Protocol)",
     period: "July 2025 - September 2025",

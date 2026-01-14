@@ -1,0 +1,203 @@
+---
+title: 'ClearCash : An Enriching Experience'
+publishedAt: '2026-01-11'
+summary: 'A look back at my participation in the Vierzon blockchain hackathon where our ClearCash team won second place with our so|cash solution for instant interbank payments.'
+---
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/hackahton-vierzon/1.jpeg" alt="Équipe ClearCash" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">ClearCash team at Blockchain Hackathon Vierzon 2024</p>
+</div>
+
+How to transform a paper invoice into a traceable NFT token on blockchain? This question was at the heart of the **Vierzon Blockchain Hackathon** (1st edition) which took place from October 4-6, 2024, where our team developed **ClearCash**, a revolutionary solution for interbank payments.
+
+---
+
+# 48 Hours to Disrupt Finance
+
+How to make interbank payments instant and transparent? This was the objective of this first blockchain hackathon in Vierzon, organized by **B3 Village by CA**.
+
+Beyond the competition, the event offered technical workshops and conferences with experts like Éric Larchevêque and Guénolé de Cadoudal, allowing us to deepen our blockchain knowledge while developing our solution.
+
+<div className="flex flex-col items-center my-6">
+  <img src="/blogs/hackahton-vierzon/2.jpeg" alt="Présentation ClearCash" className="rounded-lg shadow-sm max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Presenting our solution</p>
+</div>
+
+# Our Project: ClearCash (so|cash)
+
+### Our team, composed of:
+- **Samy Ayoub**
+- **Pierrot Moreno**
+- **Zakaria Chaikhi**
+- **Myself (Théo Dubois)**
+
+We developed **ClearCash**, a solution built on the **so|cash** protocol. This project focuses on a major innovation in the financial sector: enabling financial institutions to perform instant transactions on the blockchain.
+
+### Key Features
+
+Our **so|cash** solution offers:
+
+- **Invoice issuance as NFTs**: Each invoice becomes a non-fungible token, guaranteeing its uniqueness and traceability
+- **Payment tracking and validation via blockchain**: Complete transaction transparency with an immutable history
+- **Interbank payment management**: Seamless connection between client and supplier accounts
+- **Instant and secure transactions**: Elimination of traditional bank transfer delays
+- **Smart contract integration**: Automated account management
+
+<br />
+
+---
+
+# Technical Architecture
+
+### Technology Stack
+
+Our ClearCash solution relies on a modern and robust architecture:
+
+```bash
+# Deployment on Avalanche Fuji Testnet
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network fuji
+```
+
+**Technologies used:**
+- **Solidity**: Secure smart contracts
+- **Ethers.js**: Blockchain interaction
+- **React.js**: User interface
+- **Hardhat**: Development framework
+- **OpenZeppelin**: Security libraries
+- **Avalanche Fuji**: Testnet for testing
+
+### How NFT-Invoices Work
+
+The core of our innovation lies in transforming traditional invoices into NFT tokens:
+
+```solidity
+// Simplified structure of our NFT-Invoice
+struct Invoice {
+    uint256 id;
+    address issuer;
+    address client;
+    uint256 amount;
+    string description;
+    InvoiceStatus status;
+    uint256 timestamp;
+}
+
+enum InvoiceStatus {
+    ISSUED,
+    PAID,
+    CANCELLED
+}
+```
+
+This approach guarantees:
+- **Uniqueness**: Each invoice is a unique token
+- **Traceability**: Immutable transaction history
+- **Verification**: Automatic payment validation
+
+### Smart Payment Management
+
+Our system automates the complete lifecycle of an invoice:
+
+```solidity
+function processPayment(uint256 invoiceId) external payable {
+    Invoice storage invoice = invoices[invoiceId];
+    require(invoice.status == InvoiceStatus.ISSUED, "Invoice already paid");
+    require(msg.value >= invoice.amount, "Insufficient amount");
+
+    // Transfer to supplier account
+    payable(invoice.issuer).transfer(invoice.amount);
+
+    // Status update
+    invoice.status = InvoiceStatus.PAID;
+
+    emit InvoicePaid(invoiceId, msg.sender, invoice.amount);
+}
+```
+
+**Technical advantages:**
+- **Atomicity**: Payment and update in one transaction
+- **Security**: Automatic amount verification
+- **Transparency**: Traceable blockchain events
+
+# Technical Challenges Encountered
+
+### Integrating the so|cash Protocol
+
+The biggest challenge was adapting our solution to the so|cash protocol for instant interbank payments. We had to:
+
+```javascript
+// Multi-network connection
+const networks = {
+  fuji: {
+    rpc: "https://api.avax-test.network/ext/bc/C/rpc",
+    chainId: 43113
+  },
+  socash: {
+    rpc: process.env.SOCASH_RPC_URL,
+    chainId: process.env.SOCASH_CHAIN_ID
+  }
+}
+```
+
+**Implemented solutions:**
+- **Multi-chain compatibility**: Support for multiple blockchain networks
+- **Gas optimization**: Reduced transaction costs
+- **Real-time synchronization**: Real-time synchronization between banks
+
+### Critical State Management
+
+Ensuring data consistency between the traditional banking system and blockchain:
+
+- **Rollback mechanism**: Rollback mechanism in case of failure
+- **State validation**: Cross-validation of states
+- **Error handling**: Robust network error handling
+
+<br />
+
+---
+
+# Result
+
+**Second place - CACIB / so|cash use case**
+
+This recognition validates our innovative approach to modernizing interbank payments using blockchain technology.
+
+<div className="flex flex-col items-center my-8">
+  <img src="/blogs/hackahton-vierzon/3.jpeg" alt="Remise des prix" className="rounded-lg shadow-md max-w-md" />
+  <p className="text-sm text-gray-600 mt-2 italic">Awards ceremony</p>
+</div>
+
+## Demo
+
+<div className="flex flex-col items-center my-8">
+  <video controls className="rounded-lg shadow-md max-w-full">
+    <source src="/blogs/hackahton-vierzon/CACIB-demo.mov" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <p className="text-sm text-gray-600 mt-2 italic">ClearCash solution demo</p>
+</div>
+
+
+# Key Learnings
+
+This experience confirmed the importance of participating in hackathons. These events:
+
+- **Open new horizons**: Discovery of innovative technologies and approaches
+- **Foster collaboration**: Intensive teamwork on concrete projects
+- **Stimulate creativity**: Time constraints that drive innovation
+- **Create opportunities**: Networking with industry professionals
+
+<br />
+# Impact
+
+Blockchain continues to revolutionize traditional sectors, and this hackathon allowed me to concretely explore its application in financial services.
+
+---
+
+**My advice**: Participate in hackathons, they will open new horizons for you!
+
+🔗 **Useful links:**
+- [GitHub](https://github.com/DIGIX666/Invoice-CACIB-web3)
+- [Sia Partners article about the event](https://www.sia-partners.com/fr/publications/publications-de-nos-experts/hackathon-blockchain-vierzon)
