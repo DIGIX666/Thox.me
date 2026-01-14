@@ -1,0 +1,405 @@
+---
+title: 'Qubex Protocol: Quantum-Safe Infrastructure'
+publishedAt: '2026-01-13'
+summary: 'Discover Qubex Protocol, our quantum-safe blockchain infrastructure solution developed for the Internet Computer Protocol WCHL hackathon. An enterprise-ready architecture with post-quantum cryptography and MEV protection.'
+---
+
+# Qubex Protocol: Quantum-Safe Infrastructure
+
+<div className="flex justify-center my-6">
+  <img
+    src="/blogs/qubex/qualification-1st-place.jpeg"
+    alt="1st place qualification certificate Portugal WCHL 2025"
+    className="rounded-lg shadow-lg max-w-full h-auto"
+  />
+</div>
+
+# Our Participation in the WCHL Hackathon
+
+The **World Championship Hackathon League (WCHL)** organized by Internet Computer Protocol was the perfect opportunity to materialize our vision: creating a **quantum-safe** and **enterprise-ready** blockchain infrastructure.
+
+<div className="flex justify-center my-8">
+  <img
+    src="/blogs/qubex/certifaction-wchl.jpeg"
+    alt="WCHL Hackathon certification for Qubex Protocol"
+    className="rounded-lg shadow-lg max-w-full h-auto"
+  />
+</div>
+
+**Qubex Protocol won first place** during the Portugal hub qualification phase in July 2025, allowing us to advance to the second preliminary phases in August and then nationals in September. This hackathon took place from July to October 2025.
+
+**Qubex Protocol** was born from this ambition to protect digital assets against current and future threats, particularly the advent of quantum computers that threaten classical cryptography.
+
+# The Qubex Vision: Post-Quantum Security
+
+In a world where quantum computers are approaching maturity, classical cryptography becomes vulnerable. Qubex Protocol anticipates this revolution by implementing **NIST post-quantum cryptography standards** today:
+
+- **ML-DSA (Dilithium)**: Lattice-based signatures, standardized NIST FIPS 204
+- **SLH-DSA**: Stateless signatures based on hash functions
+- **Hybrid Signatures**: Double protection classical + quantum-resistant
+- **Intelligent Compression**: 70%+ signature size optimization
+<br />
+---
+### Hybrid Cryptographic Architecture
+
+Our cryptographic engine combines multiple algorithms according to this conceptual schema:
+
+```
+┌───────────────────────────────────────────────────────────┐
+│                  Hybrid Signature Engine                  │
+├─────────────┬─────────────┬─────────────┬─────────────────┤
+│  Classical  │   ML-DSA    │   SLH-DSA   │   Compression   │
+│             │ (Dilithium) │  (Stateless)│     Engine      │
+│ • ECDSA     │ • Lattice   │ • Hash-based│ • 70%+ ratio    │
+│ • Ed25519   │ • NIST FIPS │ • Stateless │ • Adaptive      │
+│ • Schnorr   │ • 204 std   │ • Long-term │ • Energy opt    │
+└─────────────┴─────────────┴─────────────┴─────────────────┘
+```
+
+**Hybrid Signature Architecture:**
+- **Classical Layer**: Compatibility with existing systems
+- **Post-Quantum Layer**: Protection against future threats
+- **Intelligent Compression**: 70%+ size optimization
+- **Real-Time Metrics**: Performance monitoring
+
+**Hybrid Generation Pseudocode:**
+```
+FUNCTION generate_hybrid_signature(message, private_key):
+  // Phase 1: Parallel signatures
+  classical_sig = generate_classical_signature(message, private_key.classical)
+  mldsa_sig = generate_mldsa_signature(message, private_key.mldsa)
+  slhdsa_sig = generate_slhdsa_signature(message, private_key.slhdsa)
+
+  // Phase 2: Hybrid assembly
+  hybrid_signature = {
+    classical: classical_sig,
+    mldsa: mldsa_sig,
+    slhdsa: slhdsa_sig,
+    timestamp: get_current_time(),
+    algorithm_versions: get_algorithm_versions()
+  }
+
+  // Phase 3: Intelligent compression
+  original_size = calculate_size(hybrid_signature)
+  compressed_sig = adaptive_compress(hybrid_signature)
+  compression_ratio = (original_size - compressed_sig.size) / original_size
+
+  RETURN {
+    signature: compressed_sig,
+    metadata: {
+      original_size: original_size,
+      compressed_size: compressed_sig.size,
+      compression_ratio: compression_ratio,
+      energy_efficiency: calculate_energy_score(hybrid_signature)
+    }
+  }
+
+FUNCTION verify_hybrid_signature(message, signature, public_key):
+  // Decompression
+  decompressed_sig = decompress(signature.signature)
+
+  // Parallel verification of three layers
+  classical_valid = verify_classical(message, decompressed_sig.classical, public_key.classical)
+  mldsa_valid = verify_mldsa(message, decompressed_sig.mldsa, public_key.mldsa)
+  slhdsa_valid = verify_slhdsa(message, decompressed_sig.slhdsa, public_key.slhdsa)
+
+  // Validation policy: at least 2/3 must be valid
+  valid_count = classical_valid + mldsa_valid + slhdsa_valid
+  RETURN (valid_count >= 2)
+```
+<br />
+---
+### ML-DSA (Dilithium) Implementation
+
+**ML-DSA (Dilithium) Implementation - NIST Standards**
+
+Our implementation rigorously follows NIST FIPS 204 specifications:
+
+```
+ML-DSA Implementation Overview:
+├── Security Level: 2 (128-bit quantum security)
+├── Algorithm: Dilithium2 parameters
+├── Key Sizes: Public (1312 bytes), Private (2560 bytes)
+├── Signature Size: ~2420 bytes (before compression)
+├── Platform: WASM-compatible pure Rust
+└── Standards: NIST FIPS 204 compliant
+```
+
+**Technical Characteristics:**
+- **Quantum Security**: Proven resistance against Shor algorithms
+- **Performance**: Generation < 3ms, verification < 1ms
+- **Interoperability**: Compatible with NIST standard implementations
+- **Optimization**: Intelligent compression reducing size by 70%+
+
+*Complete details in our [technical documentation](https://qubex-protocol.gitbook.io/qubex-protocol-docs/)*
+<br />
+---
+## Multi-Canister Architecture on ICP
+
+Our solution fully exploits Internet Computer Protocol capabilities with a **multi-canister microservices architecture**:
+
+### Specialized Canisters
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   Frontend Dashboard                        │
+│              (Next.js + TypeScript)                         │
+├─────────────────────────────────────────────────────────────┤
+│                    qubex_backend                            │
+│               (Orchestration Layer)                         │
+├─────────────┬─────────────┬─────────────--┬────────────────-┤
+│ qubex_crypto│ qubex_auth  │qubex_sequencer│  qubex_common   │
+│             │             │               │                 │
+│ • ML-DSA    │ • Identity  │ • VRF Order   │ • Shared Types  │
+│ • SLH-DSA   │ • RBAC      │ • MEV Guard   │ • Error Handling│
+│ • ECDSA     │ • Sessions  │ • Batching    │ • Validation    │
+│ • Schnorr   │ • Audit     │ • Consensus   │ • Compression   │
+└─────────────┴─────────────┴─────────────--┴─────────────────┘
+```
+
+- **qubex_crypto**: Cryptographic operations and key management
+- **qubex_auth**: Authentication and role-based access control
+- **qubex_sequencer**: Transaction ordering with MEV protection
+- **qubex_backend**: Multi-chain coordination and wallet management
+- **qubex_common**: Shared types and utilities
+
+### Multi-Level Authentication System
+
+**Multi-Level Authentication System**
+
+The authentication canister implements granular role-based access control:
+
+```
+Authentication Flow:
+
+┌──────────────┐    ┌─────────────────┐    ┌──────────────────┐
+│   Request    │───▶│  Identity       │───▶│  Authorization   │
+│              │    │  Verification   │    │  Engine          │
+└──────────────┘    └─────────────────┘    └──────────────────┘
+                             │                       │
+                             ▼                       ▼
+                    ┌─────────────────┐    ┌──────────────────┐
+                    │ • Principal ID  │    │ • Role-Based     │
+                    │ • Canister Auth │    │ • Permission     │
+                    │ • Session Valid │    │ • Operation      │
+                    │ • Rate Limiting │    │ • Audit Trail    │
+                    └─────────────────┘    └──────────────────┘
+```
+
+**Permission Levels:**
+- **ViewOwnKeys**: View personal keys
+- **GenerateKeys**: Generate new key pairs
+- **SignTransactions**: Sign cross-chain transactions
+- **DeleteKeys**: Secure key deletion
+- **BatchOperations**: High-performance batch operations
+
+**Authentication Pseudocode:**
+```
+FUNCTION verify_crypto_access(caller, operation):
+  // Reject anonymous users
+  IF caller == anonymous THEN
+    RETURN error("Anonymous access denied")
+
+  // Authorize validated canisters
+  IF is_authorized_canister(caller) THEN
+    RETURN success
+
+  // Verify user permissions
+  required_permission = map_operation_to_permission(operation)
+  IF user_has_permission(caller, required_permission) THEN
+    log_audit_event(caller, operation, "SUCCESS")
+    RETURN success
+  ELSE
+    log_audit_event(caller, operation, "DENIED")
+    RETURN error("Insufficient permissions")
+
+FUNCTION map_operation_to_permission(operation):
+  SWITCH operation:
+    CASE "get_keypair", "view_keys" → RETURN ViewOwnKeys
+    CASE "generate_keypair" → RETURN GenerateKeys
+    CASE "sign_transaction" → RETURN SignTransactions
+    CASE "delete_keypair" → RETURN DeleteKeys
+    CASE "batch_operations" → RETURN BatchOperations
+    DEFAULT → RETURN error("Unknown operation")
+```
+
+*Detailed architecture in our [authentication guide](https://qubex-protocol.gitbook.io/qubex-protocol-docs/)*
+<br />
+---
+## Native Multi-Chain Support
+
+Qubex Protocol doesn't just offer quantum-safety, it also provides **universal compatibility**:
+
+- **Native Bitcoin**: Direct BTC operations without bridges
+- **ICP Integration**: Seamless compatibility with Internet Computer
+- **ckBTC Support**: Chain-key Bitcoin functionality
+- **Unified Vaults**: Centralized cross-chain asset management
+<br />
+---
+## Advanced MEV Protection
+
+Our **Maximum Extractable Value (MEV)** protection system:
+
+- **VRF-based Ordering**: Unpredictable transaction sequencing
+- **Commit-Reveal Schemes**: Transaction details hidden until execution
+- **Economic Incentives**: MEV reward redistribution to users
+- **Multi-Vector Defense**: Complete attack prevention
+<br />
+---
+### Transaction Sequencer
+
+**Anti-MEV Transaction Sequencer**
+
+Our sequencer integrates multiple protection layers:
+
+```
+Transaction Sequencing Pipeline:
+
+ Input Tx → [Validation] → [VRF Ordering] → [Compression] → [Execution]
+     │           │              │              │             │
+     │           ▼              ▼              ▼             ▼
+     │      ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐
+     │      │Signature │  │Fairness  │  │Size      │  │State    │
+     └────▶│Check     │  │Algorithm │  │Reduction │  │Update   │
+            │Anti-Spam │  │Time-based│  │70%+ Ratio│  │Atomic   │
+            └──────────┘  └──────────┘  └──────────┘  └─────────┘
+```
+
+**Protection Mechanisms:**
+- **VRF Ordering**: Unpredictable anti-front-running sequences
+- **Commit-Reveal**: Detail masking until execution
+- **Economic Incentives**: MEV benefit redistribution
+- **Real-Time Compression**: Gas cost optimization
+
+**Sequencer Pseudocode:**
+```
+FUNCTION sequence_transaction(transaction):
+  start_time = get_current_time()
+
+  // Phase 1: Validation
+  IF NOT validate_signature(transaction) THEN
+    RETURN error("Invalid signature")
+  IF NOT check_anti_spam(transaction.sender) THEN
+    RETURN error("Rate limit exceeded")
+
+  // Phase 2: VRF Ordering
+  vrf_seed = get_latest_randomness()
+  sequence_number = generate_vrf_sequence(transaction, vrf_seed)
+  block_height = get_current_block_height()
+
+  // Phase 3: Compression
+  compressed_data = compress_transaction(transaction)
+  compression_ratio = calculate_compression_ratio(transaction, compressed_data)
+
+  // Phase 4: Finalization
+  sequenced_tx = {
+    transaction: compressed_data,
+    sequence_number: sequence_number,
+    block_height: block_height,
+    compression_ratio: compression_ratio,
+    processing_time: get_current_time() - start_time
+  }
+
+  // MEV Protection: hide until execution
+  commit_reveal_store.add(sequenced_tx)
+  RETURN sequenced_tx
+
+FUNCTION batch_sequence_transactions(transactions):
+  batch_results = []
+  FOR each tx in transactions:
+    result = sequence_transaction(tx)
+    batch_results.append(result)
+
+  // Optimization: parallel validation processing
+  execute_parallel_validation(batch_results)
+  RETURN batch_results
+```
+
+**Performance Metrics:**
+- Latency: < 100ms per transaction
+- Throughput: 25,000+ distributed TPS
+- MEV Protection: 99%+ efficiency
+- Finality: 2-3 seconds average
+
+*Complete specifications in the [sequencer documentation](https://qubex-protocol.gitbook.io/qubex-protocol-docs/)*
+<br />
+---
+## Enterprise Performance Metrics
+
+Our benchmarks demonstrate production-ready performance:
+
+```
+Performance Metrics Dashboard:
+┌────────────────────────────────────────────────────────────────┐
+│                    Production Benchmarks                       │
+├─────────────────┬───────────────┬───────────────┬──────────────┤
+│   Throughput    │   Latency     │   Security    │ Efficiency.  │
+│                 │               │               │              │
+│ • 25,000+ TPS   │ • Sign: <3ms  │ • Quantum     │ • 70%+       │
+│ • Multi-chain   │ • Verify:<1ms │   Resistant   │   Compression│
+│ • Scalable      │ • Final:2-3s  │ • MEV 99%+    │ • Energy     │
+│ • Enterprise    │ • Sub-100ms   │   Protected   │   Optimized  │
+└─────────────────┴───────────────┴───────────────┴──────────────┘
+```
+
+**Competitive Advantages:**
+- **Future-Proof Security**: Quantum protection today
+- **Optimized Costs**: Intelligent compression reducing fees
+- **User Experience**: Fast finality, intuitive interface
+- **Interoperability**: Native Bitcoin + ICP ecosystem support
+
+## Project Resources
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <div className="p-4 bg-zinc-800 rounded-lg">
+    <p className="text-center mb-4">
+      <strong>Technical Demonstration</strong>
+    </p>
+    <div className="aspect-video">
+      <iframe
+        src="https://www.youtube.com/embed/N3yEALPCjKY"
+        title="Qubex Protocol - Technical Demonstration"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        className="w-full h-full rounded-lg"
+      ></iframe>
+    </div>
+  </div>
+
+  <div className="p-4 bg-zinc-800 rounded-lg">
+    <p className="text-center mb-4">
+      <strong>Complete Presentation</strong>
+    </p>
+    <div className="aspect-video">
+      <iframe
+        src="https://www.canva.com/design/DAGwwAiN-Tk/choY6OyJqPGb55m6QWS6Hw/view?embed"
+        title="Qubex Protocol - Pitch Deck"
+        frameBorder="0"
+        allowFullScreen
+        className="w-full h-full rounded-lg"
+      ></iframe>
+    </div>
+    <div className="flex justify-center mt-2">
+      <a
+        href="https://www.canva.com/design/DAGwwAiN-Tk/choY6OyJqPGb55m6QWS6Hw/view?utm_content=DAGwwAiN-Tk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3c283323a8"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-zinc-400 hover:text-white transition-colors"
+      >
+        Open in fullscreen
+      </a>
+    </div>
+  </div>
+</div>
+<br />
+---
+
+**The idea was to present a protocol that represents the future of blockchain infrastructure: secure, performant, and ready for the post-quantum era.**
+
+## Resources and Documentation
+
+- **Complete Documentation**: [Qubex Protocol GitBook](https://qubex-protocol.gitbook.io/qubex-protocol-docs/)
+- **Source Code**: [GitHub Organization](https://github.com/Qubex-Protocol)
+- **WCHL Hackathon**: First place qualification Portugal 2025
+- **Detailed Metrics**: 67,000+ lines of Rust, enterprise-ready architecture
