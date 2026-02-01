@@ -237,7 +237,7 @@ export default function About() {
     <section className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
         <Link
-          href="/CV/CV-EN.pdf"
+          href="https://www.canva.com/design/DAGxvRD6CMQ/vqTMVJIBd4JfzmGWVrY5JA/view?utm_content=DAGxvRD6CMQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h37392928c0"
           target="_blank"
           className="inline-flex flex-col items-center p-4 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-lg transition-colors group"
           title="CV"

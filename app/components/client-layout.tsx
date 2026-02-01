@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import SplashScreen from './splash-screen'
 
 export default function ClientLayout({
@@ -8,6 +9,7 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
   const [showSplash, setShowSplash] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -30,8 +32,12 @@ export default function ClientLayout({
       {showSplash && (
         <SplashScreen onComplete={handleSplashComplete} />
       )}
-      <div className={`transition-opacity duration-500 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
-        {children}
+      <div
+        className={`transition-opacity duration-500 ${showSplash ? 'opacity-0' : 'opacity-100'}`}
+      >
+        <div key={pathname} className="page-enter">
+          {children}
+        </div>
       </div>
     </>
   )

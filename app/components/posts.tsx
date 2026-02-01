@@ -30,8 +30,11 @@ export function BlogPosts() {
     <div>
       {years.map((year) => (
         <div key={year} className="mb-8">
-          <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 post-title">
             {year}
+            <span className="ml-2 text-sm font-medium text-neutral-400 dark:text-neutral-500">
+              {postsByYear[year].length}
+            </span>
           </h3>
           {postsByYear[year].map((post) => (
             <Link
@@ -39,7 +42,7 @@ export function BlogPosts() {
               className="flex flex-col space-y-1 mb-4"
               href={`/blog/${post.slug}`}
             >
-              <p className="text-neutral-600 dark:text-neutral-400 tracking-tight hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors">
+              <p className="post-title text-[#628141] text-xl tracking-tight transition-colors hover:text-[#86a762]">
                 {post.metadata.title}
               </p>
             </Link>

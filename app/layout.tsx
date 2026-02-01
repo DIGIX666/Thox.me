@@ -2,6 +2,12 @@ import './global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import {
+  Salsa,
+  Gudea,
+  Gloria_Hallelujah,
+  Andika,
+} from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -40,20 +46,52 @@ export const metadata: Metadata = {
 
 const cx = (...classes) => classes.filter(Boolean).join(' ')
 
+const salsa = Salsa({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-salsa',
+  display: 'swap',
+})
+
+const gudea = Gudea({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-gudea',
+  display: 'swap',
+})
+
+const gloriaHallelujah = Gloria_Hallelujah({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-gloria-hallelujah',
+  display: 'swap',
+})
+
+const andika = Andika({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-andika',
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className={cx(
-        'text-white bg-gradient-to-tl from-black via-zinc-600/20 to-black min-h-screen',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
-    >
+      <html
+        lang="en"
+        className={cx(
+          'text-white bg-gradient-to-tl from-black via-zinc-600/20 to-black min-h-screen',
+          GeistSans.variable,
+          GeistMono.variable,
+          salsa.variable,
+          gudea.variable,
+          gloriaHallelujah.variable,
+          andika.variable
+        )}
+      >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto min-h-screen relative">
         <ClientLayout>
           <Stars quantity={100} />
