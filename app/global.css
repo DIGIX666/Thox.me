@@ -110,9 +110,10 @@ html {
 }
 
 .prose strong {
-  @apply font-bold;
-  color: #c3a466;
-  text-shadow: 0 0 2px rgba(255,255,255,0.1);
+  @apply font-semibold;
+  color: #f2f2f2;
+  background: linear-gradient(180deg, transparent 55%, rgba(138, 199, 255, 0.28) 55%);
+  padding: 0 0.08em;
 }
 
 .prose blockquote {
