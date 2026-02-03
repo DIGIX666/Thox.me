@@ -2,12 +2,7 @@ import './global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import {
-  Salsa,
-  Gudea,
-  Gloria_Hallelujah,
-  Andika,
-} from 'next/font/google'
+import { Montserrat, Trykker, Amiko } from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -46,31 +41,24 @@ export const metadata: Metadata = {
 
 const cx = (...classes) => classes.filter(Boolean).join(' ')
 
-const salsa = Salsa({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-salsa',
+  weight: ['400', '500', '600'],
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
-const gudea = Gudea({
+const trykker = Trykker({
   subsets: ['latin'],
   weight: '400',
-  variable: '--font-gudea',
+  variable: '--font-trykker',
   display: 'swap',
 })
 
-const gloriaHallelujah = Gloria_Hallelujah({
+const amiko = Amiko({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-gloria-hallelujah',
-  display: 'swap',
-})
-
-const andika = Andika({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-andika',
+  weight: ['400', '600', '700'],
+  variable: '--font-amiko',
   display: 'swap',
 })
 
@@ -86,10 +74,9 @@ export default function RootLayout({
           'text-white bg-gradient-to-tl from-black via-zinc-600/20 to-black min-h-screen',
           GeistSans.variable,
           GeistMono.variable,
-          salsa.variable,
-          gudea.variable,
-          gloriaHallelujah.variable,
-          andika.variable
+          montserrat.variable,
+          trykker.variable,
+          amiko.variable
         )}
       >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto min-h-screen relative">

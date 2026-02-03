@@ -42,7 +42,7 @@ export function BlogPosts() {
               className="flex flex-col space-y-1 mb-4"
               href={`/blog/${post.slug}`}
             >
-              <p className="post-title text-[#628141] text-xl tracking-tight transition-colors hover:text-[#86a762]">
+              <p className="post-title text-[#C8C8C8] text-xl tracking-tight transition-colors hover:text-[#94C5FD]">
                 {post.metadata.title}
               </p>
             </Link>
