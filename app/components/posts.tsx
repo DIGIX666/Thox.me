@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
+import { getBlogPosts } from 'app/blog/utils'
 
 export function BlogPosts() {
   let allBlogs = getBlogPosts()
@@ -28,6 +28,31 @@ export function BlogPosts() {
 
   return (
     <div>
+      {/*
+      <div className="mb-10 flex flex-wrap gap-2">
+        <Link
+          href="/blog"
+          className="rounded-full border border-[#94C5FD]/40 bg-[#94C5FD]/10 px-3 py-1 text-xs font-medium text-[#94C5FD]"
+        >
+          All
+          <span className="ml-2 text-[10px] text-neutral-500">
+            {allBlogs.length}
+          </span>
+        </Link>
+        {tags.map((tag) => (
+          <Link
+            key={tag}
+            href={`/blog?tag=${encodeURIComponent(tag)}`}
+            className="rounded-full border border-neutral-800 px-3 py-1 text-xs font-medium text-neutral-400 transition-colors hover:border-neutral-600 hover:text-neutral-200"
+          >
+            {tag}
+            <span className="ml-2 text-[10px] text-neutral-500">
+              {tagCounts[tag]}
+            </span>
+          </Link>
+        ))}
+      </div>
+      */}
       {years.map((year) => (
         <div key={year} className="mb-8">
           <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 post-title">
@@ -37,15 +62,25 @@ export function BlogPosts() {
             </span>
           </h3>
           {postsByYear[year].map((post) => (
-            <Link
-              key={post.slug}
-              className="flex flex-col space-y-1 mb-4"
-              href={`/blog/${post.slug}`}
-            >
-              <p className="post-title text-[#C8C8C8] text-xl tracking-tight transition-colors hover:text-[#94C5FD]">
-                {post.metadata.title}
-              </p>
-            </Link>
+            <div key={post.slug} className="mb-4 space-y-2">
+              <Link href={`/blog/${post.slug}`}>
+                <p className="post-title text-[#C8C8C8] text-xl tracking-tight transition-colors hover:text-[#94C5FD]">
+                  {post.metadata.title}
+                </p>
+              </Link>
+              {post.metadata.tags?.length ? (
+                <div className="flex flex-wrap gap-2">
+                  {post.metadata.tags.map((tag) => (
+                    <span
+                      key={`${post.slug}-${tag}`}
+                      className="rounded-full border border-neutral-800 px-2.5 py-0.5 text-[11px] font-medium text-neutral-400"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           ))}
         </div>
       ))}

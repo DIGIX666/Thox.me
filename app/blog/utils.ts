@@ -6,6 +6,21 @@ type Metadata = {
   publishedAt: string
   summary: string
   image?: string
+  tags?: string[]
+}
+
+function parseTags(value: string) {
+  let trimmed = value.trim()
+  if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+    trimmed = trimmed.slice(1, -1)
+  }
+  if (!trimmed) {
+    return []
+  }
+  return trimmed
+    .split(',')
+    .map((tag) => tag.trim().replace(/^['"](.*)['"]$/, '$1'))
+    .filter(Boolean)
 }
 
 function parseFrontmatter(fileContent: string) {
@@ -20,7 +35,12 @@ function parseFrontmatter(fileContent: string) {
     let [key, ...valueArr] = line.split(': ')
     let value = valueArr.join(': ').trim()
     value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
+    let trimmedKey = key.trim() as keyof Metadata
+    if (trimmedKey === 'tags') {
+      metadata.tags = parseTags(value)
+      return
+    }
+    metadata[trimmedKey] = value
   })
 
   return { metadata: metadata as Metadata, content }
