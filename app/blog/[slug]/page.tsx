@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
@@ -11,7 +12,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }): Metadata | undefined {
   let post = getBlogPosts().find((post) => post.slug === params.slug)
   if (!post) {
     return
@@ -85,10 +86,22 @@ export default function Blog({ params }) {
       <h1 className="title post-title font-semibold text-2xl tracking-tighter text-[#F2F2F2]">
         {post.metadata.title}
       </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
+      <div className="flex flex-wrap items-center gap-3 mt-2 mb-8 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
         </p>
+        {post.metadata.tags?.length ? (
+          <div className="flex flex-wrap gap-2">
+            {post.metadata.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-neutral-800 px-2.5 py-0.5 text-[11px] font-medium text-neutral-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        ) : null}
       </div>
       <article className="prose prose-lg max-w-none">
         <CustomMDX source={post.content} />
