@@ -22,6 +22,36 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
+    title: "FoxyHack",
+    organization: "EAC2P - BA 105",
+    period: "February 9 2026 - February 10 2026",
+    description: `Hackathon System Information organized by EAC2P - BA 105 - Evreux. 
+    The idea behind this hackathon was to build a technical dossier from December 16, 2025, to January 31, 2026, with an initial evaluation of the dossier by the jury, followed by a visit to the air base on February 9-10 to build it.
+    The objective was to design a sovereign information system for use by military headquarters and operational units.
+
+    Our team decided to present a decision-making traceability chain based on:
+      - Hyperledger Fabric (permissioned blockchain)
+      - Node/Express API + FastAPI
+      - PostgreSQL
+      - Keycloak (OIDC/JWT, RBAC)
+      - Vue.js for RETEX rendering`,
+    link: "https://event.eventozor.com/FOXYHACK/",
+    projectLink: "https://github.com/DIGIX666/trace-ops",
+    type: "professional"
+  },   
+  {
+    title: "Aptos Hackathon x402",
+    organization: "Aptos",
+    period: "January 30 2026 - February 01 2026",
+    description: `hackathon organized by Aptos on the x402 protocol. 
+    My goal was to build a real-time observability and analytics SDK that facilitates monitoring, debugging, and understanding of Aptos x402 payment flows in production. 
+    It connects to any x402-protected API via middleware hooks and emits structured events for dashboards and metrics. 
+    The first x402 observability tool dedicated to Aptos developers.`,
+    link: "https://luma.com/sbn4j5lp?tk=KHMPAC",
+    projectLink: "https://github.com/DIGIX666/x402-inspector",
+    type: "professional"
+  },     
+  {
     title: "Hackathon CapX",
     organization: "CapX",
     period: "December 17 2025 - December 27 2025",
