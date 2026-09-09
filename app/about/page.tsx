@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import RevealGroup from 'app/components/reveal-group'
+import { LuMedal } from 'react-icons/lu'
 
 interface Position {
   title: string
@@ -7,6 +9,8 @@ interface Position {
   link?: string
   linkText?: string
 }
+
+type ExperienceType = 'professional' | 'hackathon' | 'education'
 
 interface Experience {
   title: string
@@ -17,8 +21,49 @@ interface Experience {
   link?: string
   projectLink?: string
   projectLinkText?: string
-  type: 'education' | 'professional'
+  recognition?: string
+  type: ExperienceType
 }
+
+const experienceTypeConfig: Record<ExperienceType, {
+  label: string
+  badgeClass: string
+}> = {
+  professional: {
+    label: 'Experience',
+    badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+  },
+  hackathon: {
+    label: 'Hackathon',
+    badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
+  },
+  education: {
+    label: 'Education',
+    badgeClass: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  },
+}
+
+const sections: Array<{
+  type: ExperienceType
+  title: string
+  accentClass: string
+}> = [
+  {
+    type: 'professional',
+    title: 'Professional Experience',
+    accentClass: 'bg-blue-500',
+  },
+  {
+    type: 'hackathon',
+    title: 'Hackathons',
+    accentClass: 'bg-amber-500',
+  },
+  {
+    type: 'education',
+    title: 'Education',
+    accentClass: 'bg-green-500',
+  },
+]
 
 const experiences: Experience[] = [
   {
@@ -37,7 +82,8 @@ const experiences: Experience[] = [
       - Vue.js for RETEX rendering`,
     link: "https://event.eventozor.com/FOXYHACK/",
     projectLink: "https://github.com/DIGIX666/trace-ops",
-    type: "professional"
+    recognition: "No prize, but a special jury commendation for the most audacious project",
+    type: "hackathon"
   },   
   {
     title: "Aptos Hackathon x402",
@@ -49,7 +95,7 @@ const experiences: Experience[] = [
     The first x402 observability tool dedicated to Aptos developers.`,
     link: "https://luma.com/sbn4j5lp?tk=KHMPAC",
     projectLink: "https://github.com/DIGIX666/x402-inspector",
-    type: "professional"
+    type: "hackathon"
   },     
   {
     title: "Hackathon CapX",
@@ -59,7 +105,7 @@ const experiences: Experience[] = [
     Our team developed Hivee, a decentralized credit protocol that enables autonomous AI agents to lend and borrow without human intervention. Built on CapX blockchain with ERC-8004 and x402 payment.`,
     link: "https://hackathon.capx.ai/",
     projectLink: "https://github.com/DIGIX666/Hivee",
-    type: "professional"
+    type: "hackathon"
   },     
   {
     title: "Hackathon WCHL",
@@ -72,7 +118,8 @@ const experiences: Experience[] = [
       . Qualified for the semifinals`,
     link: "https://wchl25.worldcomputer.com/",
     projectLink: "https://www.qubex-protocol.io/",
-    type: "professional"
+    recognition: "1st place · Portugal qualifying round",
+    type: "hackathon"
   },   
   {
     title: "U-Manage",
@@ -123,7 +170,7 @@ const experiences: Experience[] = [
     description: "The proposed concept is a decentralized (dApp) sports engagement application combining free sports betting, fan tokens (“fan tokens”), NFT and customizable 3D avatars. The aim is to innovate by offering new uses for fan tokens that go far beyond traditional governance and rewards, to bring tangible value and authentic interaction to fans and clubs. This all-in-one platform allows fans to betting for free on real events, earn points convertible into official tokens, participate in polls/DAOs, collect exclusive NFTs, while personalizing a virtual avatar in the image of their sporting passion.",
     link: "https://www.chiliz.com/what-is-a-blockchain-hackathon/",
     projectLink: "https://github.com/DIGIX666/Kolise",
-    type: "professional"
+    type: "hackathon"
   }, 
   {
     title: "Hackathon Vierzon",
@@ -133,7 +180,8 @@ const experiences: Experience[] = [
       • Second place - CACIB / so|cash use case`,
     link: "https://www.sia-partners.com/fr/publications/publications-de-nos-experts/hackathon-blockchain-vierzon",
     projectLink: "https://github.com/DIGIX666/Invoice-CACIB-web3",
-    type: "professional"
+    recognition: "2nd place · CACIB / so|cash use case",
+    type: "hackathon"
   },
   {
     title: "Zone01",
@@ -146,19 +194,27 @@ const experiences: Experience[] = [
 ]
 
 function ExperienceCard({ experience }: { experience: Experience }) {
+  const typeConfig = experienceTypeConfig[experience.type]
+
   return (
-    <div className="relative pl-8 pb-12">
-      <div className="absolute left-0 top-2 w-3 h-3 bg-neutral-200 dark:bg-neutral-800 rounded-full border-2 border-neutral-400 dark:border-neutral-600"></div>
-      <div className="absolute left-1.5 top-5 w-0.5 h-full bg-neutral-200 dark:bg-neutral-800"></div>
+    <div className="relative pl-8 pb-12" data-gsap-reveal="timeline">
+      <div className="timeline-dot absolute left-0 top-2 w-3 h-3 bg-neutral-200 dark:bg-neutral-800 rounded-full border-2 border-neutral-400 dark:border-neutral-600"></div>
+      <div className="timeline-line absolute left-1.5 top-5 w-0.5 h-full bg-neutral-200 dark:bg-neutral-800"></div>
 
       <div className="bg-neutral-50 dark:bg-neutral-900 rounded-lg p-6 shadow-sm">
+        {experience.recognition && (
+          <div
+            aria-label={`Award: ${experience.recognition}`}
+            className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300/70 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 shadow-[0_0_18px_rgba(245,158,11,0.08)] dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300"
+          >
+            <LuMedal aria-hidden="true" className="h-4 w-4 shrink-0" />
+            <span>{experience.recognition}</span>
+          </div>
+        )}
+
         <div className="flex items-center gap-2 mb-2">
-          <span className={`inline-block px-2 py-1 text-xs font-medium rounded ${
-            experience.type === 'professional'
-              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-              : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-          }`}>
-            {experience.type === 'professional' ? 'Professionnel' : 'Formation'}
+          <span className={`inline-block px-2 py-1 text-xs font-medium rounded ${typeConfig.badgeClass}`}>
+            {typeConfig.label}
           </span>
           <span className="text-sm text-neutral-600 dark:text-neutral-400">
             {experience.period}
@@ -214,7 +270,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
                         target="_blank"
                         className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline decoration-blue-400 hover:decoration-blue-600 transition-colors"
                       >
-                        {position.linkText || 'Voir le projet'}
+                        {position.linkText || 'View project'}
                         <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
@@ -245,7 +301,7 @@ function ExperienceCard({ experience }: { experience: Experience }) {
                   target="_blank"
                   className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline decoration-blue-400 hover:decoration-blue-600 transition-colors"
                 >
-                  {experience.projectLinkText || 'Voir le projet'}
+                  {experience.projectLinkText || 'View project'}
                   <svg className="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -260,70 +316,35 @@ function ExperienceCard({ experience }: { experience: Experience }) {
 }
 
 export default function About() {
-  const professionalExperiences = experiences.filter(exp => exp.type === 'professional')
-  const educationExperiences = experiences.filter(exp => exp.type === 'education')
-
   return (
-    <section className="max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <Link
-          href="https://canva.link/03jt30moqpxc19r"
-          target="_blank"
-          className="inline-flex flex-col items-center p-4 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-lg transition-colors group"
-          title="CV"
-        >
-          <svg
-            className="w-9 h-5 text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 mb-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M16 7h-4V3"
-            />
-          </svg>
-        <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-100">
-          CV
-        </span>
-        </Link>
-      </div>
+    <RevealGroup className="max-w-2xl mx-auto">
+      {sections.map((section) => {
+        const sectionExperiences = experiences.filter(
+          (experience) => experience.type === section.type
+        )
 
-      {professionalExperiences.length > 0 && (
-        <div className="mb-16">
-          <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-8 flex items-center">
-            <span className="w-2 h-8 bg-blue-500 rounded mr-3"></span>
-            Expérience Professionnelle
-          </h2>
-          <div className="relative">
-            {professionalExperiences.map((experience, index) => (
-              <ExperienceCard key={index} experience={experience} />
-            ))}
-          </div>
-        </div>
-      )}
+        if (sectionExperiences.length === 0) {
+          return null
+        }
 
-      {educationExperiences.length > 0 && (
-        <div className="mb-16">
-          <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-8 flex items-center">
-            <span className="w-2 h-8 bg-green-500 rounded mr-3"></span>
-            Formation
-          </h2>
-          <div className="relative">
-            {educationExperiences.map((experience, index) => (
-              <ExperienceCard key={index} experience={experience} />
-            ))}
-          </div>
-        </div>
-      )}
-    </section>
+        return (
+          <section key={section.type} className="mb-16" aria-labelledby={`${section.type}-title`}>
+            <h2
+              id={`${section.type}-title`}
+              className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-8 flex items-center"
+              data-gsap-reveal="section"
+            >
+              <span className={`w-2 h-8 rounded mr-3 ${section.accentClass}`}></span>
+              {section.title}
+            </h2>
+            <div className="relative">
+              {sectionExperiences.map((experience) => (
+                <ExperienceCard key={experience.title} experience={experience} />
+              ))}
+            </div>
+          </section>
+        )
+      })}
+    </RevealGroup>
   )
 }
