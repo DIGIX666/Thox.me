@@ -7,10 +7,8 @@ interface SplashScreenProps {
 }
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
-  const [isVisible, setIsVisible] = useState(true)
   const [animationPhase, setAnimationPhase] = useState('meteor-shower')
   const [revealedLetters, setRevealedLetters] = useState<boolean[]>([false, false, false, false])
-  const [showClickPrompt, setShowClickPrompt] = useState(false)
 
   useEffect(() => {
     // Phase 1: Background meteor shower
@@ -28,7 +26,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
     // Phase 3: Show click prompt
     const promptTimer = setTimeout(() => {
-      setShowClickPrompt(true)
       setAnimationPhase('complete')
     }, 4800)
 
@@ -42,12 +39,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const handleClick = () => {
     setAnimationPhase('fadeOut')
     setTimeout(() => {
-      setIsVisible(false)
       onComplete()
     }, 800)
   }
-
-  if (!isVisible) return null
 
   const letters = ['T', 'H', 'O', 'X']
 
@@ -95,7 +89,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </div>
 
         {/* Click Prompt */}
-        {showClickPrompt && (
+        {animationPhase === 'complete' && (
           <div className="mt-8 animate-pulse">
             <p className="text-lg text-zinc-300 font-light tracking-wide">
               Click to enter the cosmos

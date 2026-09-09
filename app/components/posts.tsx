@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getBlogPosts } from 'app/blog/utils'
+import RevealGroup from 'app/components/reveal-group'
 
 export function BlogPosts() {
   let allBlogs = getBlogPosts()
@@ -27,34 +28,9 @@ export function BlogPosts() {
     .sort((a, b) => b - a)
 
   return (
-    <div>
-      {/*
-      <div className="mb-10 flex flex-wrap gap-2">
-        <Link
-          href="/blog"
-          className="rounded-full border border-[#94C5FD]/40 bg-[#94C5FD]/10 px-3 py-1 text-xs font-medium text-[#94C5FD]"
-        >
-          All
-          <span className="ml-2 text-[10px] text-neutral-500">
-            {allBlogs.length}
-          </span>
-        </Link>
-        {tags.map((tag) => (
-          <Link
-            key={tag}
-            href={`/blog?tag=${encodeURIComponent(tag)}`}
-            className="rounded-full border border-neutral-800 px-3 py-1 text-xs font-medium text-neutral-400 transition-colors hover:border-neutral-600 hover:text-neutral-200"
-          >
-            {tag}
-            <span className="ml-2 text-[10px] text-neutral-500">
-              {tagCounts[tag]}
-            </span>
-          </Link>
-        ))}
-      </div>
-      */}
+    <RevealGroup>
       {years.map((year) => (
-        <div key={year} className="mb-8">
+        <div key={year} className="mb-8" data-gsap-reveal="section">
           <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 post-title">
             {year}
             <span className="ml-2 text-sm font-medium text-neutral-400 dark:text-neutral-500">
@@ -62,7 +38,7 @@ export function BlogPosts() {
             </span>
           </h3>
           {postsByYear[year].map((post) => (
-            <div key={post.slug} className="mb-4 space-y-2">
+            <div key={post.slug} className="mb-4 space-y-2" data-gsap-reveal="post">
               <Link href={`/blog/${post.slug}`}>
                 <p className="post-title text-[#C8C8C8] text-xl tracking-tight transition-colors hover:text-[#94C5FD]">
                   {post.metadata.title}
@@ -84,6 +60,6 @@ export function BlogPosts() {
           ))}
         </div>
       ))}
-    </div>
+    </RevealGroup>
   )
 }
